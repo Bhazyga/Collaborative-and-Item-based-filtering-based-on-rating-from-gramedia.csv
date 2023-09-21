@@ -1,0 +1,40 @@
+def register_user():
+    users = {}  # Dictionary to store registered users (username: password)
+
+    while True:
+        username = input("Enter a username: ")
+        if username in users:
+            print("Username already exists. Please choose a different username.")
+        else:
+            password = input("Enter a password: ")
+            users[username] = password
+            print("Registration successful!")
+            break
+
+    return users
+
+
+def login_user(users):
+    while True:
+        username = input("Enter your username: ")
+        password = input("Enter your password: ")
+
+        if username in users and users[username] == password:
+            print("Login successful!")
+            break
+        else:
+            print("Invalid username or password. Please try again.")
+
+
+def main():
+    print("Welcome to the Login and Registration System!")
+
+    # Registration
+    users = register_user()
+
+    # Login
+    login_user(users)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Awesome Bootstrap Page</title>
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    /* Custom CSS */
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <!-- Logo -->
+      <a class="navbar-brand" href="/halaman">
+        <img src="/static/gambar/logo.jpeg"  class="d-inline-block align-text-top">
+        
+      </a>
+
+      <!-- Navbar items -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/halaman">Halaman</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="logout">Logout</a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container mt-5">
+    <div class="row bg-dark text-white py-2"> <!-- Stylish header row -->
+      <div class="col">No.</div>
+      <div class="col">Judul</div>
+      <div class="col">Penulis</div>
+      <div class="col">Genre</div>
+      <div class="col">Penerbit</div>
+      <div class="col">Rating</div>
+      <div class="col">Actions</div>
+    </div>
+    {% for row in data %}
+      {% if loop.index <= limit %}
+        <div class="row align-items-center border-bottom py-2">
+          <div class="col">{{ row.no_id }}</div>
+          <div class="col">{{ row.judul }}</div>
+          <div class="col">{{ row.author }}</div>
+          <div class="col">{{ row.genre }}</div>
+          <div class="col">{{ row.penerbit }}</div>
+          <div class="col">{{ row.rating_count }}</div>
+          <div class="col">
+            <form method="POST" action="{{ url_for('increment_review', book_id=row.no_id) }}">
+              <input type="hidden" name="page" value="{{ current_page }}">
+              <button class="btn btn-success btn-sm" type="submit">Rate</button>
+            </form>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+
+
+
+
+  <div class="row mt-4">
+    <div class="col text-center">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pdfPreviewModal">
+        Cetak PDF
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+
+  <div class="modal fade" id="pdfPreviewModal" tabindex="-1" aria-labelledby="pdfPreviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="pdfPreviewModalLabel">PDF Preview</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Embed a PDF viewer or use an iframe to display the PDF content -->
+          <a href="{{ url_for('generate_pdf') }}" class="btn btn-primary">Generate PDF</a>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
